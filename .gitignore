@@ -1,0 +1,4 @@
+vendor
+.vscode
+src/App/Config/.env
+composer.lock

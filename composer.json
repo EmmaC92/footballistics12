@@ -1,0 +1,24 @@
+{
+    "name": "emmanuelc/football-statistic",
+    "description": "Football statistic for dummies",
+    "type": "project",
+    "require": {
+        "guzzlehttp/guzzle": "^7.8",
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Emmanuelc\\FootballStatistic\\": "src/"
+        },
+        "files": [
+            "src/App/Config/Middleware.php",
+            "src/App/Config/EnvVarLoader.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "emmanuelc",
+            "email": "camuschinox@gmail.com"
+        }
+    ]
+}
