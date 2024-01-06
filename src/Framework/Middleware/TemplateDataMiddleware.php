@@ -16,8 +16,6 @@ class TemplateDataMiddleware implements MiddlewareInterface
     {
         $this->engineTemplate->addGlobalParameters('title', 'FootballStatistics');
 
-        print_r(self::TESTING);
-
         $next();
     }
 }
