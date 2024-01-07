@@ -1,7 +1,8 @@
 <html>
-    <header>
-        <title>
-            <?php echo $title; ?>
-        </title>
-    </header>
-    <body>
+<header>
+    <title>
+        <?php echo "$requestCount | $title | $subTitle"; ?>
+    </title>
+</header>
+
+<body>

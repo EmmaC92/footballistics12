@@ -14,14 +14,14 @@ class HomeController
     }
 
     public function index()
-    { 
+    {
         $bocaJrsId = 451;
         $fixture = $this->footballClient->getStatisticsByTeamAndSeason($bocaJrsId, '2022');
 
         echo $this->views->render(
             'home.php',
             [
-                'title' => 'FootBallStatistics | Home',
+                'subTitle' => 'Home',
             ]
         );
     }
