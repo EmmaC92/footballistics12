@@ -1,6 +1,8 @@
 # Footballistics
 
 All statistics about the main leagues from API Sports.
+- https://www.api-football.com/
+- https://www.api-football.com/documentation-v3
 
 ## Clone this repo
 
