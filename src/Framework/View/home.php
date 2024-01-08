@@ -1,5 +1,5 @@
 <?php include $this->resolvePath('Partials/_header.php'); ?>
 <div>
-    #1 Roman
+    Home Page
 </div>
 <?php include $this->resolvePath('Partials/_footer.php'); ?>
