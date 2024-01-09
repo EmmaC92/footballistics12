@@ -2,3 +2,4 @@ vendor
 .vscode
 src/App/Config/.env
 composer.lock
+src/Framework/Utils/ApiData/
