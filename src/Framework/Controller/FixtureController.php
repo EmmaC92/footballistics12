@@ -17,12 +17,13 @@ class FixtureController
     public function fixture()
     {
         $bocaJrsId = 451;
-        $fixtures = $this->footballClient->getFixturesByTeamAndSeason($bocaJrsId, '2022');
+        $fixtures = $this->footballClient->getFixturesByTeamAndSeason($bocaJrsId, '2020');
 
         echo $this->views->render(
             'Fixture/fixture.php',
             [
-                'subTitle' => 'Fixture'
+                'subTitle' => 'Fixture',
+                'fixtures' => $fixtures
             ]
         );
     }
