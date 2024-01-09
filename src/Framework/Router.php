@@ -29,7 +29,7 @@ class Router
     {
         $path = trim($path, '/');
         $path = "/$path/";
-        return preg_replace("#[/]{2,}#", $path, '/');
+        return preg_replace('#[/]{2,}#', '/', $path);
     }
 
     public function dispatch(string $method, string $path, Container $container = null): void
@@ -39,7 +39,7 @@ class Router
 
         foreach ($this->routes as $route) {
 
-            if ($route['path'] !== $path && $route['method'] !== $method) {
+            if ($route['path'] !== $path || $route['method'] !== $method) {
                 continue;
             }
 

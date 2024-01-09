@@ -5,20 +5,24 @@ namespace Emmanuelc\FootballStatistic\Framework\Controller;
 use Emmanuelc\FootballStatistic\Framework\Utils\FootBallClient;
 use Emmanuelc\FootballStatistic\Framework\EngineTemplate;
 
-class HomeController
+class FixtureController
 {
+
     public function __construct(
         private FootBallClient $footballClient,
         private EngineTemplate $views
     ) {
     }
 
-    public function index()
+    public function fixture()
     {
+        $bocaJrsId = 451;
+        $fixtures = $this->footballClient->getFixturesByTeamAndSeason($bocaJrsId, '2022');
+
         echo $this->views->render(
-            'home.php',
+            'Fixture/fixture.php',
             [
-                'subTitle' => 'Home',
+                'subTitle' => 'Fixture'
             ]
         );
     }

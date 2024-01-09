@@ -14,7 +14,7 @@ class FootBallClient
 
     private const STATUS_ENDPOINT = 'status';
 
-    private const FIXTURE_ENDPOINT = 'fixture';
+    private const FIXTURE_ENDPOINT = 'fixtures';
 
     private const ARGENTINE_LEAGUE_ID = 130;
 
@@ -26,6 +26,20 @@ class FootBallClient
     public function getStatisticsByTeamAndSeason(int $teamId, string $season = null): mixed
     {
         $endpointPathUrl = $this->getEndpointBasePathUrl(self::TEAM_STATISTICS_ENDPOINT);
+        $queryParams = $this->getQueryParamsForTeamAndSeason($teamId, $season);
+
+        $url = sprintf(
+            '%s?%s',
+            $endpointPathUrl,
+            $queryParams
+        );
+
+        return $this->request($url);
+    }
+
+    public function getFixturesByTeamAndSeason(int $teamId, string $season = null)
+    {
+        $endpointPathUrl = $this->getEndpointBasePathUrl(SELF::FIXTURE_ENDPOINT);
         $queryParams = $this->getQueryParamsForTeamAndSeason($teamId, $season);
 
         $url = sprintf(

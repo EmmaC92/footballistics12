@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Emmanuelc\FootballStatistic\Framework;
+
 use Emmanuelc\FootballStatistic\Framework\Router;
 use Emmanuelc\FootballStatistic\Framework\Container;
 
@@ -48,6 +49,6 @@ class App
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $method = $_SERVER['REQUEST_METHOD'];
 
-        $this->router->dispatch($path, $method, $this->container);
+        $this->router->dispatch($method, $path, $this->container);
     }
 }
