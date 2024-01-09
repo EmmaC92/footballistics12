@@ -18,11 +18,14 @@ class CheckRequestCountMiddleware implements MiddlewareInterface
     {
         $status = $this->client->getStatus();
 
-        $current = $status['requests']['current'];
+        $requestCount = '<>';
+        if (!empty($status)) {
+            $current = $status['requests']['current'];
 
-        $limitDay = $status['requests']['limit_day'];
+            $limitDay = $status['requests']['limit_day'];
 
-        $requestCount = $limitDay - $current;
+            $requestCount = $limitDay - $current;
+        }
 
         $this->views->addGlobalParameters('requestCount', $requestCount);
         $next();

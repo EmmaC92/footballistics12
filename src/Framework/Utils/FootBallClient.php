@@ -2,6 +2,7 @@
 
 namespace Emmanuelc\FootballStatistic\Framework\Utils;
 
+use Emmanuelc\FootballStatistic\App\Config\Paths;
 use GuzzleHttp\Client;
 
 class FootBallClient
@@ -39,7 +40,7 @@ class FootBallClient
 
     public function getFixturesByTeamAndSeason(int $teamId, string $season = null)
     {
-        $endpointPathUrl = $this->getEndpointBasePathUrl(SELF::FIXTURE_ENDPOINT);
+        $endpointPathUrl = $this->getEndpointBasePathUrl(self::FIXTURE_ENDPOINT);
         $queryParams = $this->getQueryParamsForTeamAndSeason($teamId, $season);
 
         $url = sprintf(
@@ -76,10 +77,10 @@ class FootBallClient
         );
     }
 
-    private function request($url): mixed
+    private function request(string $url): mixed
     {
         if (!(bool)getenv('REQUEST_TO_API')) {
-            return [];
+            return $this->checkAndRetrieveApiData($url);
         }
 
         $response = $this->clientAPI->get($url, [
@@ -90,6 +91,28 @@ class FootBallClient
 
         $content = json_decode($response->getBody()->getContents(), true);
 
+        $this->createFileIntoApiData($url, $content);
+
         return $content['response'];
+    }
+
+    private function checkAndRetrieveApiData(string $url): array
+    {
+        $endpoint = str_replace(self::BASE_API_PATH, '', $url);
+        $file = Paths::API_DATA . "/$endpoint.json";
+        if (file_exists($file)) {
+
+            $content = json_decode(file_get_contents($file), true);
+
+            return $content['response'];
+        }
+        return [];
+    }
+
+    private function createFileIntoApiData(string $url, array $content): void
+    {
+        $endpoint = str_replace(self::BASE_API_PATH, '', $url);
+        $file = Paths::API_DATA . "/$endpoint.json";
+        file_put_contents($file, json_encode($content));
     }
 }
