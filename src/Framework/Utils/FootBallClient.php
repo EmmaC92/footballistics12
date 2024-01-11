@@ -15,6 +15,8 @@ class FootBallClient
     private const STATUS_ENDPOINT = 'status';
     private const FIXTURES_ENDPOINT = 'fixtures';
     private const LEAGUES_ENDPOINT = 'leagues';
+    private const COUNTRIES_ENDPOINT = 'countries';
+
     private const ARGENTINA_COUNTRY_ID = 'Argentina';
 
     public function __construct()
@@ -25,12 +27,19 @@ class FootBallClient
     public function getArgentineLeagues(): array
     {
         $url = $this->getFullUrlWithParams(self::LEAGUES_ENDPOINT, [
-            'country' => self::ARGENTINA_COUNTRY_ID,
+            'country' => $_GET['country'] ?? self::ARGENTINA_COUNTRY_ID,
             'season' => $_GET['season'] ?? '2024',
         ]);
 
         return $this->request($url);
     }
+
+    public function getCountry(): array
+    {
+        $url = $this->getFullUrlWithParams(self::COUNTRIES_ENDPOINT);
+        return $this->request($url);
+    }
+
 
     public function getArgentineLeague(int $league, int $season = 2024): array
     {
@@ -65,13 +74,18 @@ class FootBallClient
     private function getFullUrlWithParams(string $endpoint, array $params = []): string
     {
         $endpointPathUrl = $this->getEndpointBasePathUrl($endpoint);
-        $queryParams = $this->getQueryParamsForEndpoint($params);
 
-        return sprintf(
-            '%s?%s',
-            $endpointPathUrl,
-            $queryParams
-        );
+        if (!empty($params)) {
+            $queryParams = $this->getQueryParamsForEndpoint($params);
+
+            $endpointPathUrl = sprintf(
+                '%s?%s',
+                $endpointPathUrl,
+                $queryParams
+            );
+        }
+
+        return $endpointPathUrl;
     }
 
     private function getQueryParamsForEndpoint(array $params): string
@@ -97,8 +111,12 @@ class FootBallClient
 
     private function request(string $url): mixed
     {
+        if ($this->checkFileApiData($url)) {
+            return $this->retrieveContentApiData($url);
+        }
+
         if (!(bool)getenv('REQUEST_TO_API')) {
-            return $this->checkAndRetrieveApiData($url);
+            return [];
         }
 
         $response = $this->clientAPI->get($url, [
@@ -114,17 +132,24 @@ class FootBallClient
         return $content['response'];
     }
 
-    private function checkAndRetrieveApiData(string $url): array
+    private function getFileNameFromUrl(string $url): string
     {
         $endpoint = str_replace(self::BASE_API_PATH, '', $url);
-        $file = Paths::API_DATA . "/$endpoint.json";
-        if (file_exists($file)) {
+        return Paths::API_DATA . "/$endpoint.json";
+    }
 
-            $content = json_decode(file_get_contents($file), true);
+    private function checkFileApiData(string $url): bool
+    {
+        $file = $this->getFileNameFromUrl($url);
+        return file_exists($file);
+    }
 
-            return $content['response'];
-        }
-        return [];
+    private function retrieveContentApiData(string $url): array
+    {
+        $file = $this->getFileNameFromUrl($url);
+        $content = json_decode(file_get_contents($file), true);
+
+        return $content['response'];
     }
 
     private function createFileIntoApiData(string $url, array $content): void

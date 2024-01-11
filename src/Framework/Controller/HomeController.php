@@ -17,12 +17,14 @@ class HomeController
     public function leagues()
     {
         $leagues = $this->footballClient->getArgentineLeagues();
+        $countries = $this->footballClient->getCountry();
 
         echo $this->views->render(
             'League/leagues.php',
             [
                 'subTitle' => 'All leagues',
-                'leagues' => $leagues
+                'leagues' => $leagues,
+                'countries' => $countries
             ]
         );
     }

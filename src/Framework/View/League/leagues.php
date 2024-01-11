@@ -9,6 +9,14 @@
 <div class="league-page">
     <div class="league-by-season">
         <form action="/" method="GET">
+            <label for="season">Country:</label>
+            <select id="country" name="country" required>
+                <option value="" disabled selected>Select a Country</option>
+                <?php foreach ($countries as $country) : ?>
+                    <option value="<?php echo $country['name']; ?>"><?php echo $country['name']; ?></option>
+                <?php endforeach; ?>
+            </select><br><br>
+
             <label for="season">Leagues by Season:</label>
             <select id="season" name="season" required>
                 <option value="" disabled selected>Select a season</option>
@@ -32,7 +40,7 @@
         <select id="league" name="league" required>
             <option value="" disabled selected>Select a league</option>
             <?php foreach ($leagues as $league) : ?>
-                <option value="<?php echo $league['league']['id'] ?>"><?php echo $league['league']['name'] ?></option>
+                <option value="<?php echo $league['league']['id']; ?>"><?php echo $league['league']['name']; ?></option>
             <?php endforeach; ?>
             <!-- Add more options as needed -->
         </select><br><br>
