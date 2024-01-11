@@ -1,0 +1,43 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+#teams-container {
+    font-size: smaller;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border: 2px solid #ddd;
+    /* Add a border to the container */
+    padding: 10px;
+    /* Add some padding for better appearance */
+    border-radius: 10px;
+    /* Add rounded corners */
+}
+
+.team {
+    display: grid;
+    text-align: center;
+    /* 10 teams per line with 20px margin between teams */
+    margin: 2%;
+}
+
+.team-logo {
+    display: block;
+    margin: auto;
+    width: 30px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.team-name {
+    font-size: 1.2em;
+}

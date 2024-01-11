@@ -12,7 +12,9 @@ class Routes
 {
     public static function addRoutes(App $app)
     {
-        $app->get('/', [HomeController::class, 'index']);
+        $app->get('/', [HomeController::class, 'leagues']);
+        $app->post('/league', [HomeController::class, 'league']);
+
         $app->get('/fixture/', [FixtureController::class, 'fixture']);
     }
 }

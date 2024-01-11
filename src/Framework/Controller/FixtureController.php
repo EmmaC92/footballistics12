@@ -16,8 +16,11 @@ class FixtureController
 
     public function fixture()
     {
-        $bocaJrsId = 451;
-        $fixtures = $this->footballClient->getFixturesByTeamAndSeason($bocaJrsId, '2020');
+        $teamId = (int)$_GET['teamId'];
+        $season = (string)$_GET['season'];
+        $fixtures = $this->footballClient->getFixturesByTeamAndSeason($teamId, $season);
+
+        $fixtures = array_reverse($fixtures);
 
         echo $this->views->render(
             'Fixture/fixture.php',

@@ -10,55 +10,73 @@ class FootBallClient
     private Client $clientAPI;
 
     private const BASE_API_PATH = 'https://v3.football.api-sports.io/';
-
     private const TEAM_STATISTICS_ENDPOINT = 'teams/statistics';
-
+    private const TEAMS_ENDPOINT = 'teams';
     private const STATUS_ENDPOINT = 'status';
-
-    private const FIXTURE_ENDPOINT = 'fixtures';
-
-    private const ARGENTINE_LEAGUE_ID = 130;
+    private const FIXTURES_ENDPOINT = 'fixtures';
+    private const LEAGUES_ENDPOINT = 'leagues';
+    private const ARGENTINA_COUNTRY_ID = 'Argentina';
 
     public function __construct()
     {
         $this->clientAPI = new Client();
     }
 
-    public function getStatisticsByTeamAndSeason(int $teamId, string $season = null): mixed
+    public function getArgentineLeagues(): array
     {
-        $endpointPathUrl = $this->getEndpointBasePathUrl(self::TEAM_STATISTICS_ENDPOINT);
-        $queryParams = $this->getQueryParamsForTeamAndSeason($teamId, $season);
+        $url = $this->getFullUrlWithParams(self::LEAGUES_ENDPOINT, [
+            'country' => self::ARGENTINA_COUNTRY_ID,
+            'season' => $_GET['season'] ?? '2024',
+        ]);
 
-        $url = sprintf(
-            '%s?%s',
-            $endpointPathUrl,
-            $queryParams
-        );
+        return $this->request($url);
+    }
+
+    public function getArgentineLeague(int $league, int $season = 2024): array
+    {
+        $url = $this->getFullUrlWithParams(self::TEAMS_ENDPOINT, [
+            'league' => $league,
+            'season' => $season,
+        ]);
+
+        return $this->request($url);
+    }
+
+    public function getStatisticsByTeamAndSeason(int $teamId, int $season = 2024): mixed
+    {
+        $url = $this->getFullUrlWithParams(self::TEAM_STATISTICS_ENDPOINT, [
+            'team' => $teamId,
+            'season' => $season,
+        ]);
 
         return $this->request($url);
     }
 
     public function getFixturesByTeamAndSeason(int $teamId, string $season = null)
     {
-        $endpointPathUrl = $this->getEndpointBasePathUrl(self::FIXTURE_ENDPOINT);
-        $queryParams = $this->getQueryParamsForTeamAndSeason($teamId, $season);
-
-        $url = sprintf(
-            '%s?%s',
-            $endpointPathUrl,
-            $queryParams
-        );
+        $url = $this->getFullUrlWithParams(self::FIXTURES_ENDPOINT, [
+            'team' => $teamId,
+            'season' => $season,
+        ]);
 
         return $this->request($url);
     }
 
-    private function getQueryParamsForTeamAndSeason(int $teamId, string $season = null): string
+    private function getFullUrlWithParams(string $endpoint, array $params = []): string
     {
-        return http_build_query([
-            'team' => $teamId,
-            'season' => $season,
-            'league' => self::ARGENTINE_LEAGUE_ID
-        ]);
+        $endpointPathUrl = $this->getEndpointBasePathUrl($endpoint);
+        $queryParams = $this->getQueryParamsForEndpoint($params);
+
+        return sprintf(
+            '%s?%s',
+            $endpointPathUrl,
+            $queryParams
+        );
+    }
+
+    private function getQueryParamsForEndpoint(array $params): string
+    {
+        return http_build_query($params);
     }
 
     public function getStatus(): mixed
