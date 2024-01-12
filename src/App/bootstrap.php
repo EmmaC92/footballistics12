@@ -8,13 +8,11 @@ use Emmanuelc\FootballStatistic\App\Config\{
     Paths
 };
 use function Emmanuelc\FootballStatistic\App\Config\{
-    registerMiddleware,
-    loadEnvVars
+    registerMiddleware
 };
 
 $app = new App(Paths::SOURCE_PATH . "src/App/container-definition.php");
 Routes::addRoutes($app);
 registerMiddleware($app);
-loadEnvVars($app);
 
 return $app;

@@ -11,8 +11,7 @@
             "Emmanuelc\\FootballStatistic\\": "src/"
         },
         "files": [
-            "src/App/Config/Middleware.php",
-            "src/App/Config/EnvVarLoader.php"
+            "src/App/Config/Middleware.php"
         ]
     },
     "authors": [

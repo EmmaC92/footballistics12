@@ -24,11 +24,11 @@ class FootBallClient
         $this->clientAPI = new Client();
     }
 
-    public function getArgentineLeagues(): array
+    public function getLeagues(string $country, string $season): array
     {
         $url = $this->getFullUrlWithParams(self::LEAGUES_ENDPOINT, [
-            'country' => $_GET['country'] ?? self::ARGENTINA_COUNTRY_ID,
-            'season' => $_GET['season'] ?? '2024',
+            'country' => $country,
+            'season' => $season,
         ]);
 
         return $this->request($url);
@@ -41,7 +41,7 @@ class FootBallClient
     }
 
 
-    public function getArgentineLeague(int $league, int $season = 2024): array
+    public function getTeamsByLeague(int $league, int $season = 2024): array
     {
         $url = $this->getFullUrlWithParams(self::TEAMS_ENDPOINT, [
             'league' => $league,

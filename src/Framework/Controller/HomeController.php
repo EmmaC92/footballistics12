@@ -2,45 +2,26 @@
 
 namespace Emmanuelc\FootballStatistic\Framework\Controller;
 
-use Emmanuelc\FootballStatistic\Framework\Utils\FootBallClient;
 use Emmanuelc\FootballStatistic\Framework\EngineTemplate;
-
+use Emmanuelc\FootballStatistic\Framework\Utils\FootBallClient;
 
 class HomeController
 {
     public function __construct(
-        private FootBallClient $footballClient,
-        private EngineTemplate $views
+        private FootBallClient $client,
+        private EngineTemplate $views,
     ) {
     }
 
-    public function leagues()
+    public function home()
     {
-        $leagues = $this->footballClient->getArgentineLeagues();
-        $countries = $this->footballClient->getCountry();
+        $countries = $this->client->getCountry();
 
         echo $this->views->render(
-            'League/leagues.php',
+            'home.php',
             [
-                'subTitle' => 'All leagues',
-                'leagues' => $leagues,
-                'countries' => $countries
-            ]
-        );
-    }
-
-    public function league()
-    {
-        $leagueId = $_POST['league'];
-        $season = $_POST['season'];
-
-        $league = $this->footballClient->getArgentineLeague($leagueId, $season);
-        echo $this->views->render(
-            'League/league.php',
-            [
-                'subTitle' => 'League',
-                'league' => $league,
-                'season' => $season
+                'countries' => $countries,
+                'subTitle' => 'Home'
             ]
         );
     }

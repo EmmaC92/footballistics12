@@ -39,10 +39,10 @@ class App
         $this->router->addMiddleware($middlewareClass);
     }
 
-    public function loadEnvVars(string $path)
-    {
-        \Dotenv\Dotenv::createUnsafeImmutable($path)->load();
-    }
+    // public function loadEnvVars(string $path)
+    // {
+    //     \Dotenv\Dotenv::createUnsafeImmutable($path)->load();
+    // }
 
     public function run()
     {

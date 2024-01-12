@@ -5,14 +5,17 @@ namespace Emmanuelc\FootballStatistic\Framework\Middleware;
 use Emmanuelc\FootballStatistic\Framework\Interface\MiddlewareInterface;
 use Emmanuelc\FootballStatistic\Framework\EngineTemplate;
 
-class TemplateDataMiddleware implements MiddlewareInterface
-{ 
-    public function __construct(private EngineTemplate $engineTemplate)
+class FlashMiddleware implements MiddlewareInterface
+{
+    public function __construct(private EngineTemplate $view)
     {
     }
+
     public function process(callable $next)
     {
-        $this->engineTemplate->addGlobalParameters('title', 'FootballStatistics');
+        $this->view->addGlobalParameters('errors', $_SESSION['errors'] ?? []);
+
+        unset($_SESSION['errors']);
 
         $next();
     }
