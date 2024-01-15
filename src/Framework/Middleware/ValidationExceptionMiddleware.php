@@ -15,9 +15,9 @@ class ValidationExceptionMiddleware implements MiddlewareInterface
             $next();
         } catch (ValidationException $e) {
             $_SESSION['errors'] = $e->errors;
-            // $referer = $_SERVER['HTTP_REFERER'];
+            $referer = $_SERVER['HTTP_REFERER'] ?? '/';
 
-            $this->redirecTo('/?season=2022&country=Argentina');
+            $this->redirecTo($referer);
         }
     }
 
