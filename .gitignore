@@ -1,5 +1,5 @@
-vendor
 .vscode
-src/App/Config/.env
+.env
+vendor
 composer.lock
 src/Framework/Utils/ApiData/
